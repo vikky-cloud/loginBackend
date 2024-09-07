@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 # Initialize SQLAlchemy
 db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+
+    # Enable CORS
+    CORS(app)
 
     # Database configuration
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/loginDB'
@@ -25,7 +29,6 @@ def create_app():
         password = data.get('password')
 
         # For simplicity, we'll just use hardcoded credentials here
-        # You should query the database to verify user credentials
         if username == 'testuser' and password == 'testpassword':
             return jsonify({'success': True})
         else:
